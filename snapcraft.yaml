@@ -1,0 +1,89 @@
+name: kate
+version: 16.07.70-snap1
+summary: Text editor application.
+description:  Kate is a multi-document, multi-view text editor for KDE. It features stuff like codefolding, syntaxhighlighting, dynamic word wrap, an embedded console, an extensive plugin interface and some prelimentary scripting support.
+
+apps:
+  kate:
+    command: qt5-launch usr/bin/kate
+    plugs: [x11, unity7, home, opengl, network, network-bind]
+    
+parts:
+  qt:
+    plugin: nil
+    stage-packages:
+      - libqt5core5a
+      - libqt5dbus5
+      - libqt5widgets5
+      - libqt5script5
+      - libqt5sql5
+      - libqt5test5
+  frameworks:
+    plugin: nil
+    stage-packages:
+      - extra-cmake-modules
+      - libkf5activities5
+      - libkf5configcore5
+      - libkf5configgui5
+      - libkf5i18n5
+      - libkf5jobwidgets5
+      - kdoctools
+      - kio
+      - libkf5parts5
+      - libkf5texteditor5
+      - libkf5windowsystem5
+      - libkf5xmlgui5
+      - libkf5iconthemes5
+  kate:
+    plugin: cmake
+    configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
+    source: git://anongit.kde.org/kate.git
+    source-type: git
+    build-packages: 
+      - extra-cmake-modules
+      - libkf5activities-dev
+      - libkf5config-dev
+      - libkf5completion-dev
+      - libkf5i18n-dev
+      - libkf5iconthemes-dev
+      - libkf5jobwidgets-dev
+      - kdoctools-dev
+      - kio-dev
+      - libkf5parts-dev
+      - libkf5texteditor-dev
+      - libkf5windowsystem-dev
+      - libkf5xmlgui-dev
+      - qtbase5-dev
+    filesets:
+      binaries:
+        - usr/bin/*
+      libraries:
+        - usr/lib/*
+      headers:
+        - usr/include/*
+        - usr/lib/*/cmake/*
+    stage:
+      - etc/xdg/*
+      - usr/share/*
+      - $binaries
+      - $libraries
+      - $headers
+    snap: 
+      - etc/xdg/*
+      - $libraries
+      - $binaries
+      - usr/share/*
+    after: [qt, frameworks] 
+  environment:
+    plugin: copy
+    files:
+      qt5-launch: bin/qt5-launch
+  integration:
+    plugin: nil
+    stage-packages:
+      - ttf-ubuntu-font-family
+      - breeze-icon-theme
+      - hicolor-icon-theme
+      - oxygen-icon-theme
+    snap:
+      - usr/share 
