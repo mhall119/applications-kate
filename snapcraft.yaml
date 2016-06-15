@@ -34,12 +34,14 @@ parts:
       - libkf5windowsystem5
       - libkf5xmlgui5
       - libkf5iconthemes5
+      - libkf5crash5
   kate:
     plugin: cmake
     configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
     source: git://anongit.kde.org/kate.git
     source-type: git
     build-packages: 
+      - build-essential
       - extra-cmake-modules
       - libkf5activities-dev
       - libkf5config-dev
@@ -54,6 +56,8 @@ parts:
       - libkf5windowsystem-dev
       - libkf5xmlgui-dev
       - qtbase5-dev
+      - libkf5crash-dev
+      - gettext
     filesets:
       binaries:
         - usr/bin/*
